@@ -1,0 +1,134 @@
+---
+title: "OPIM 5603 — Statistics in Business Analytics
+University of Connecticut -
+Case 1"
+author: "Group 2 (Jonathan, Eric, Anna, Rishank, Haoming)"
+date: "03/03/2024"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+# The originial Excel file was broken down to two separate CSV files named "Gulf_View" and  "No_Gulf_View" respectively.
+
+# Problem 1
+
+View(Gulf_View)
+summary(Gulf_View$`List Price`)
+summary(Gulf_View$`Sale Price`)
+summary(Gulf_View$`Days to Sell`)
+sd(Gulf_View$`List Price`)
+sd(Gulf_View$`Sale Price`)
+sd(Gulf_View$`Days to Sell`)
+
+```
+
+
+```{r}
+# Problem 2
+
+View(No_Gulf_View)
+summary(No_Gulf_View$`List Price`)
+summary(No_Gulf_View$`Sale Price`)
+summary(No_Gulf_View$`Days to Sell`)
+sd(No_Gulf_View$`List Price`)
+sd(No_Gulf_View$`Sale Price`)
+sd(No_Gulf_View$`Days to Sell`)
+
+```
+
+
+```{r}
+# Problem 3
+
+# When you analyze the Gulf view condominiums to those with no view you can infer the following: when you look at the min, max and median of both of the Condos you can see that the min, max and median values are lower for the condominiums that do not have a view. That being said one can infer that the overall listing price for the condos without a view is lower. The same can be seen when you look at the sales price of the two , the condos with the view have a lower sales price. When you look at the min median and max days to sell values of the two you can see that it typically takes less days to sell a condo with a view then it takes to sell one that has a view. Based on that information you will probably be more profitable if you focus on selling condos with a view then no view. On average they cost more and are faster to sell then those that do not have one. However if you look at the standard deviations of the two compared to each other you can see that the apartments with no gulf view have a smaller standard deviation then those that have a view. A higher number for standard deviation implies that there is a lot of variability in the data and that it is less reliable. This can pose a risk to the agent.
+```
+
+
+```{r}
+# Problem 4
+
+t.test(Gulf_View$`Sale Price`, conf.level = .95) 
+# 95% ci: 392.6523 515.7927 
+# mean of x: 454.2225
+# margin of error: 61.5702
+
+t.test(Gulf_View$`Days to Sell`, conf.level = .95)
+# 95% ci: 89.30051 122.69949
+# mean of x: 106
+# margin of error: 16.69949
+
+```
+
+
+```{r}
+# Problem 5
+
+t.test(No_Gulf_View$`Sale Price`, conf.level = .95) 
+# 95% ci: 181.3620 225.0157
+# mean of x: 203.1889
+# margin of error: 21.8268
+
+t.test(No_Gulf_View$`Days to sell`, conf.level = .95) 
+# 95% ci: 97.05704 172.94296
+# mean of x: 135
+# margin of error: 37.94296
+```
+
+
+```{r}
+# Problem 6
+
+moe_Gulf_View_SP <- 40
+moe_No_Gulf_View_SP <- 15
+sd_Gulf_SP <- sd(Gulf_View$`Sale Price`)
+sd_No_Gulf_SP <- sd(No_Gulf_View$`Sale Price`)
+
+Sample_Size_Gulf_View <- ceiling(((1.96^2)*(sd_Gulf_SP^2))/(moe_Gulf_View_SP^2))
+print(Sample_Size_Gulf_View)
+
+Sample_Size_No_Gulf_View <- ceiling(((1.96^2)*(sd_No_Gulf_SP^2))/(moe_No_Gulf_View_SP^2))
+print(Sample_Size_No_Gulf_View)
+
+```
+
+
+```{r}
+# Problem 7
+
+## Gulf View
+Gulf_View_Ratio <- mean(Gulf_View$`Sale Price`/ Gulf_View$`List Price`)
+
+Gulf_View_Days_Avg <- mean(Gulf_View$`Days to Sell`)
+
+Gulf_View_New_List_Price <- 589
+Gulf_View_Estimated_Sale_Price <- Gulf_View_New_List_Price * Gulf_View_Ratio
+print(Gulf_View_Estimated_Sale_Price) ### Estimated sale price
+
+Gulf_View_Estimated_Days_to_Sell <- Gulf_View_Days_Avg
+print(Gulf_View_Estimated_Days_to_Sell) ### Estimated days to sell
+
+
+## No Gulf View
+No_Gulf_View_Ratio <- mean(No_Gulf_View$`Sale Price`/ No_Gulf_View$`List Price`)
+
+No_Gulf_View_Days_Avg <- mean(No_Gulf_View$`Days to Sell`)
+
+No_Gulf_View_New_List_Price <- 285
+No_Gulf_View_Estimated_Sale_Price <- No_Gulf_View_New_List_Price * No_Gulf_View_Ratio
+print(No_Gulf_View_Estimated_Sale_Price) ### Estimated sale price
+
+No_Gulf_View_Estimated_Days_to_Sell <- No_Gulf_View_Days_Avg
+print(No_Gulf_View_Estimated_Days_to_Sell) ### Estimated days to sell
+
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
